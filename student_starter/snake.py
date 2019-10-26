@@ -33,38 +33,27 @@ KEY_MAPPING = {(pg.K_LEFT, pg.K_a) : "left", (pg.K_RIGHT, pg.K_d) : "right",
 
 
 class Apple(object):
-    """Something edible.  Causes unrestricted growth in some animals."""
     def __init__(self, walls, snake):
-        self.position = self.respawn(snake.body_set | walls)
-        self.walls = walls
-        self.color = COLORS["apple"]
+        """
+        Insert your constructor here
+        """
+        
 
     def collide_with(self, snake):
-        """If eaten find a new home."""
-        self.position = self.respawn(snake.body_set | self.walls)
-
+        """If the apple is eaten, make it appear in a new position."""
+        # Insert your code here
+        
     def respawn(self, obstacles):
         """Don't land in a wall or inside the snake."""
-        position = tuple(random.randrange(BOARD_SIZE[i]) for i in (0,1))
-        while position in obstacles:
-            position = tuple(random.randrange(BOARD_SIZE[i]) for i in (0,1))
-        return position
+        # Insert your code here
 
 
 class Snake(object):
     """Green and snakey."""
     def __init__(self):
-        self.color = COLORS["snake"]
-        self.speed = 8 # Cells per second
-        self.direction = "up"
-        self.vector = DIRECT_DICT[self.direction]
-        self.body = [(10, 25), (10, 24)]
-        self.body_set = set(self.body)
-        self.growing = False
-        self.grow_number = 0
-        self.timer = 0
-        self.dead = False
-        self.direction_queue = queue.Queue(5)
+        """
+        Insert your constructor here, according to the specifications presented in the lab.
+        """
 
     def update(self, now):
         """Add new cell for the head.  If not growing, delete the tail."""
@@ -84,42 +73,21 @@ class Snake(object):
         Check direction queue for a new direction.  Directions parallel
         to the snakes current movement are ignored.
         """
-        try:
-            new = self.direction_queue.get(block=False)
-        except queue.Empty:
-            new = self.direction
-        if new not in (self.direction, OPPOSITES[self.direction]):
-            self.vector = DIRECT_DICT[new]
-            self.direction = new
+        # Insert your code here 
 
     def grow(self):
         """Increment grow number and reset if done."""
-        self.grow_number += 1
-        if self.grow_number == GROWTH_PER_APPLE:
-            self.grow_number = 0
-            self.growing = False
+        # insert your code here
 
     def check_collisions(self, apple, walls):
         """Get apples and collide with body and walls."""
-        if self.body[-1] == apple.position:
-            apple.collide_with(self)
-            self.growing = True
-        elif self.body[-1] in walls:
-            self.dead = True
-        elif any(val > 1 for val in collections.Counter(self.body).values()):
-            self.dead = True
+        # insert your code here
 
     def get_key_press(self, key):
         """
         Add directions to the direction queue if key in KEY_MAPPING is pressed.
         """
-        for keys in KEY_MAPPING:
-            if key in keys:
-                try:
-                    self.direction_queue.put(KEY_MAPPING[keys], block=False)
-                    break
-                except queue.Full:
-                    pass
+        # insert your code here
 
     def draw(self, surface, offset=(0,0)):
         """Draw the whole body, then the head."""
